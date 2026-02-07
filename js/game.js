@@ -2,10 +2,18 @@
 
 // Direction constants
 const DIRECTION = {
-    UP: { x: 0, y: -1 },
-    DOWN: { x: 0, y: 1 },
-    LEFT: { x: -1, y: 0 },
-    RIGHT: { x: 1, y: 0 }
+    UP: 'UP',
+    DOWN: 'DOWN',
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT'
+};
+
+// Direction vectors
+const DIRECTION_VECTORS = {
+    'UP': { x: 0, y: -1 },
+    'DOWN': { x: 0, y: 1 },
+    'LEFT': { x: -1, y: 0 },
+    'RIGHT': { x: 1, y: 0 }
 };
 
 // Snake class
@@ -28,11 +36,14 @@ class Snake {
         // Update direction (prevent 180-degree turn)
         this.direction = this.nextDirection;
 
+        // Get direction vector
+        const dirVector = DIRECTION_VECTORS[this.direction];
+
         // Calculate new head position
         const head = this.body[0];
         const newHead = {
-            x: head.x + this.direction.x,
-            y: head.y + this.direction.y
+            x: head.x + dirVector.x,
+            y: head.y + dirVector.y
         };
 
         // Add new head
@@ -51,22 +62,20 @@ class Snake {
     }
 
     // BUG FIX #2: Prevent 180-degree turn causing game over
-    // When moving right, pressing left should be ignored (and vice versa)
-    // When moving up, pressing down should be ignored (and vice versa)
+    // CRITICAL BUG FIX: Use string-based direction comparison
     changeDirection(newDirection) {
         // Prevent 180-degree turn
         const opposite = {
-            [DIRECTION.UP]: DIRECTION.DOWN,
-            [DIRECTION.DOWN]: DIRECTION.UP,
-            [DIRECTION.LEFT]: DIRECTION.RIGHT,
-            [DIRECTION.RIGHT]: DIRECTION.LEFT
+            'UP': 'DOWN',
+            'DOWN': 'UP',
+            'LEFT': 'RIGHT',
+            'RIGHT': 'LEFT'
         };
 
         // Only change direction if it's not the opposite of current direction
         if (newDirection !== opposite[this.direction]) {
             this.nextDirection = newDirection;
         }
-        // BUG FIX: Ignore input if trying to reverse direction
     }
 
     getHead() {
