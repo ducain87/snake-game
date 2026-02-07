@@ -20,6 +20,7 @@ class GameController {
         // Setup controls
         this.setupKeyboardControls();
         this.setupButtonControls();
+        this.setupDirectionControls(); // BUG FIX #3
 
         // Initial render
         this.render();
@@ -75,6 +76,48 @@ class GameController {
         startBtn.addEventListener('click', () => this.start());
         pauseBtn.addEventListener('click', () => this.togglePause());
         resetBtn.addEventListener('click', () => this.reset());
+    }
+
+    // BUG FIX #3: 터치/모바일 디바이스를 위한 화면 방향키 버튼
+    setupDirectionControls() {
+        const upBtn = document.getElementById('upBtn');
+        const downBtn = document.getElementById('downBtn');
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+
+        // 버튼 클릭 이벤트
+        upBtn.addEventListener('click', () => {
+            if (!this.game.gameOver) {
+                this.game.changeDirection(DIRECTION.UP);
+            }
+        });
+
+        downBtn.addEventListener('click', () => {
+            if (!this.game.gameOver) {
+                this.game.changeDirection(DIRECTION.DOWN);
+            }
+        });
+
+        leftBtn.addEventListener('click', () => {
+            if (!this.game.gameOver) {
+                this.game.changeDirection(DIRECTION.LEFT);
+            }
+        });
+
+        rightBtn.addEventListener('click', () => {
+            if (!this.game.gameOver) {
+                this.game.changeDirection(DIRECTION.RIGHT);
+            }
+        });
+
+        // 터치 이벤트 지원 (모바일)
+        [upBtn, downBtn, leftBtn, rightBtn].forEach(btn => {
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // 더블탭 줌 방지
+                btn.click();
+            });
+        });
+        // BUG FIX: 이제 좌측 버튼(←)을 포함한 모든 방향키 버튼이 정상 작동합니다
     }
 
     start() {
@@ -152,4 +195,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-start message
     console.log('🐍 Snake Game loaded! Press Start button or use arrow keys to play.');
     console.log('Controls: Arrow keys or WASD to move, Space to pause');
+    console.log('Touch controls available for mobile devices!');
 });
