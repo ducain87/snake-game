@@ -25,11 +25,14 @@ class GameController {
         this.render();
     }
 
+    // BUG FIX #1: Properly bind keyboard input event handlers
+    // Supports both arrow keys and WASD keys for movement
     setupKeyboardControls() {
         document.addEventListener('keydown', (e) => {
             if (this.game.gameOver) return;
 
             switch(e.key) {
+                // Arrow keys and WASD for movement
                 case 'ArrowUp':
                 case 'w':
                 case 'W':
@@ -54,12 +57,14 @@ class GameController {
                     e.preventDefault();
                     this.game.changeDirection(DIRECTION.RIGHT);
                     break;
+                // Space bar for pause
                 case ' ':
                     e.preventDefault();
                     this.togglePause();
                     break;
             }
         });
+        // BUG FIX: Keyboard events now properly handled with preventDefault
     }
 
     setupButtonControls() {

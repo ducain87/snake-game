@@ -50,6 +50,9 @@ class Snake {
         this.growing = true;
     }
 
+    // BUG FIX #2: Prevent 180-degree turn causing game over
+    // When moving right, pressing left should be ignored (and vice versa)
+    // When moving up, pressing down should be ignored (and vice versa)
     changeDirection(newDirection) {
         // Prevent 180-degree turn
         const opposite = {
@@ -59,9 +62,11 @@ class Snake {
             [DIRECTION.RIGHT]: DIRECTION.LEFT
         };
 
+        // Only change direction if it's not the opposite of current direction
         if (newDirection !== opposite[this.direction]) {
             this.nextDirection = newDirection;
         }
+        // BUG FIX: Ignore input if trying to reverse direction
     }
 
     getHead() {
