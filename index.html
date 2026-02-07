@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🐍 Snake Game</h1>
+        <div class="score-board">
+            <div>점수: <span id="score">0</span></div>
+            <div>최고점: <span id="high-score">0</span></div>
+        </div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="controls">
+            <button id="startBtn">시작</button>
+            <button id="pauseBtn">일시정지</button>
+            <button id="resetBtn">재시작</button>
+        </div>
+        <div class="instructions">
+            <p>방향키로 뱀을 조종하세요!</p>
+            <p>먹이를 먹으면 점수가 올라갑니다.</p>
+        </div>
+    </div>
+    
+    <script src="js/game.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
